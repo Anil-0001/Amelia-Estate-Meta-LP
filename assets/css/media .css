@@ -1,163 +1,218 @@
+.mobile-hero-section {
+    display: none;
+}
+
 @media (max-width: 767px) {
     body {
         background: #000;
     }
 
     .hero-section {
-        align-items: flex-start;
-        height: 100svh;
+        display: none !important;
+    }
+
+    main {
         min-height: 100svh;
-        max-height: 100svh;
-        margin: 0 auto;
-        max-width: 430px;
-        padding: 12px 18px 14px;
+        background: #000;
     }
 
-    .hero-section::after {
-        content: "";
-        position: absolute;
-        inset: 12px 18px 14px;
-        z-index: 1;
-        border: 1px solid rgba(255, 255, 255, .08);
-        border-radius: 30px;
-        box-shadow: 0 28px 70px rgba(0, 0, 0, .72);
-        pointer-events: none;
-    }
-
-    .slide {
-        inset: 12px 18px 14px;
-        border-radius: 30px;
-        background-position: center top;
+    .mobile-hero-section {
+        display: grid !important;
+        min-height: 100svh;
+        place-items: center;
+        padding: 0;
         overflow: hidden;
     }
 
-    .hero-section > .absolute.inset-0 {
-        inset: 12px 18px 14px;
-        border-radius: 30px;
+    .mobile-card {
+        position: relative;
+        width: 100%;
+        height: 100svh;
+        min-height: 100svh;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, .08);
+        border-radius: 0;
+        background: #070707;
+        box-shadow: 0 28px 80px rgba(0, 0, 0, .82);
+        isolation: isolate;
     }
 
-    .hero-section > .absolute.inset-x-0 {
-        left: 18px;
-        right: 18px;
-        border-radius: 0 0 30px 30px;
+    .mobile-progress {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 8px;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
     }
 
-    .hero-section .relative.z-20 {
-        min-height: calc(100svh - 26px);
-        padding: 0 14px 4px;
+    .mobile-dot {
+        height: 3px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .42);
     }
 
-    .hero-section .relative.z-20 > .animate-rise:first-child {
-        display: none;
+    .mobile-dot::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 100%;
+        border-radius: inherit;
+        background: #fff4d4;
     }
 
-    .hero-section .mt-8 {
-        margin-top: auto;
+    .mobile-dot.active::after {
+        animation: mobileDotProgress 3200ms linear both;
+    }
+
+    .mobile-slide-wrap,
+    .mobile-slide {
+        position: absolute;
+        inset: 0;
+    }
+
+    .mobile-slide {
+        opacity: 0;
+        background-position: center top;
+        background-size: cover;
+        transform: scale(1.06);
+        transition: opacity 900ms ease, transform 4200ms ease;
+    }
+
+    .mobile-slide.active {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    .mobile-slide-1 {
+        background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85');
+    }
+
+    .mobile-slide-2 {
+        background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=85');
+    }
+
+    .mobile-slide-3 {
+        background-image: url('https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=85');
+    }
+
+    .mobile-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(180deg, rgba(0, 0, 0, .04) 0%, rgba(0, 0, 0, .08) 42%, rgba(0, 0, 0, .9) 100%);
+        pointer-events: none;
+    }
+
+    .mobile-info-card {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 108px;
+        z-index: 2;
         border: 1px solid rgba(255, 255, 255, .12);
         border-radius: 24px;
-        background: linear-gradient(145deg, rgba(64, 45, 28, .82), rgba(14, 13, 12, .88));
-        box-shadow: 0 18px 55px rgba(0, 0, 0, .5);
-        padding: 18px 16px 16px;
+        background: linear-gradient(145deg, rgba(62, 45, 31, .88), rgba(19, 16, 13, .9));
+        box-shadow: 0 18px 54px rgba(0, 0, 0, .48);
+        padding: 18px 16px;
         backdrop-filter: blur(18px);
     }
 
-    .desktop-eyebrow,
-    .desktop-title,
-    .desktop-subtitle,
-    .desktop-features,
-    .hero-section .animate-rise.delay-500 > p {
-        display: none;
-    }
-
-    .mobile-eyebrow,
-    .mobile-title,
-    .mobile-subtitle,
-    .mobile-features {
-        display: flex;
-    }
-
-    .mobile-title {
-        flex-direction: column;
-    }
-
-    .mobile-eyebrow,
-    .mobile-subtitle {
-        display: inline;
-    }
-
-    .hero-section h1 {
-        font-size: 42px;
-        line-height: .98;
-    }
-
-    .hero-section h1 span:first-child {
-        color: #fff;
-    }
-
-    .hero-section p {
-        font-size: 14px;
-        line-height: 1.5;
-    }
-
-    .hero-section .animate-rise.delay-100 {
-        margin-bottom: 12px;
-        text-transform: uppercase;
-        letter-spacing: .18em;
-    }
-
-    .hero-section .animate-rise.delay-500 {
-        margin-top: 10px;
-        gap: 12px;
-    }
-
-    .slider-dots {
-        order: -1;
-        position: fixed;
-        left: 50%;
-        top: 18px;
-        z-index: 30;
-        width: min(390px, calc(100vw - 64px));
-        transform: translateX(-50%);
-    }
-
-    .dot {
-        flex: 1;
-        width: auto;
-        height: 3px;
-        background: rgba(255, 255, 255, .36);
-    }
-
-    .dot.active {
-        width: auto;
-    }
-
-    .hero-section #openPriceForm {
-        max-width: none;
-        padding-bottom: 15px;
-        padding-top: 15px;
-        border-radius: 16px;
-    }
-
-    .desktop-cta-label,
-    .desktop-chat-link,
-    .desktop-popup-title {
-        display: none;
-    }
-
-    .mobile-cta-label,
-    .book-visit-link,
-    .mobile-popup-title {
-        display: inline;
-    }
-
-    .book-visit-link {
+    .mobile-kicker {
+        margin: 0 0 10px;
         color: rgba(255, 255, 255, .68);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .18em;
+        line-height: 1;
+        text-transform: uppercase;
     }
 
-    .feature-pill {
+    .mobile-info-card h2 {
+        margin: 0;
+        color: #fff;
+        font-family: Cinzel, serif;
+        font-size: clamp(38px, 10.8vw, 48px);
+        font-weight: 700;
+        line-height: .96;
+        letter-spacing: 0;
+        text-shadow: 0 8px 22px rgba(0, 0, 0, .52);
+    }
+
+    .mobile-info-card h2 span {
+        display: block;
+    }
+
+    .mobile-info-card h2 span:last-child {
+        color: #f0d35a;
+    }
+
+    .mobile-copy {
+        margin: 10px 0 0;
+        color: rgba(255, 255, 255, .9);
+        font-size: 14px;
+        font-weight: 800;
+        line-height: 1.35;
+    }
+
+    .mobile-chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .mobile-chip-row span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 32px;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 999px;
+        background: rgba(24, 25, 28, .78);
+        color: #fff;
         font-size: 12px;
-        padding: 10px 14px;
-        background: rgba(29, 30, 32, .86);
+        font-weight: 900;
+        line-height: 1;
+        padding: 8px 14px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+
+    .mobile-actions {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 17px;
+        z-index: 2;
+        display: grid;
+        gap: 11px;
+        text-align: center;
+    }
+
+    .mobile-actions button {
+        width: 100%;
+        min-height: 52px;
+        border: 0;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f2cf54, #dfb82e);
+        color: #030303;
+        cursor: pointer;
+        font: inherit;
+        font-size: 16px;
+        font-weight: 900;
+        box-shadow: 0 18px 42px rgba(226, 186, 48, .32);
+    }
+
+    .mobile-actions a {
+        color: rgba(255, 255, 255, .68);
+        font-size: 14px;
+        font-weight: 900;
+        text-decoration: none;
     }
 
     #priceSheet {
@@ -170,27 +225,74 @@
         font-family: Cinzel, serif;
     }
 
+    .desktop-popup-title {
+        display: none;
+    }
+
+    .mobile-popup-title {
+        display: inline;
+    }
+
     .mobile-popup-subtitle,
     .mobile-price-actions {
-        display: block;
+        display: block !important;
+    }
+
+    .mobile-price-actions > p {
+        font-size: 28px;
+        line-height: 1.15;
+    }
+
+    .mobile-price-actions .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .mobile-price-actions a {
+        border-radius: 12px;
+        padding: 15px 12px;
+        font-size: 15px;
     }
 
     #priceForm {
-        display: none;
+        display: none !important;
     }
 }
 
-@media (max-width: 480px) {
-    .hero-section h1 {
-        font-size: 38px;
+@media (max-width: 380px) {
+    .mobile-card {
+        border-radius: 0;
+        min-height: 100svh;
     }
 
-    .feature-pill {
-        font-size: 10px;
-        padding: 8px 9px;
+    .mobile-info-card {
+        left: 14px;
+        right: 14px;
+        bottom: 104px;
+        padding: 16px 14px;
     }
 
-    .gold-title {
-        text-shadow: 0 2px 0 rgba(0, 0, 0, .55), 0 10px 20px rgba(0, 0, 0, .75);
+    .mobile-info-card h2 {
+        font-size: 36px;
+    }
+
+    .mobile-chip-row {
+        gap: 7px;
+    }
+
+    .mobile-chip-row span {
+        font-size: 11px;
+        min-height: 30px;
+        padding: 8px 12px;
+    }
+}
+
+@keyframes mobileDotProgress {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
     }
 }

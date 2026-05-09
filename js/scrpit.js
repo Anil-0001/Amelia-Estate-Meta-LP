@@ -6,15 +6,21 @@ const priceSheet = document.getElementById('priceSheet');
 const sheetOverlay = document.getElementById('sheetOverlay');
 const priceForm = document.getElementById('priceForm');
 const submitPriceForm = document.getElementById('submitPriceForm');
-const submitText = submitPriceForm.querySelector('.submit-text');
+const submitText = submitPriceForm ? submitPriceForm.querySelector('.submit-text') : null;
+const mobileSlides = document.querySelectorAll('.mobile-slide');
+const mobileDots = document.querySelectorAll('.mobile-dot');
+const mobileOpenPriceForm = document.getElementById('mobileOpenPriceForm');
 
 let activeSlide = 0;
+let activeMobileSlide = 0;
 let sliderTimer;
+let mobileSliderTimer;
 let closeTimer;
 let successTimer;
 const slideDuration = 3200;
 
 const hasSlider = slides.length > 0 && dots.length > 0;
+const hasMobileSlider = mobileSlides.length > 0 && mobileDots.length > 0;
 const hasForm = openPriceForm && closePriceForm && priceSheet && sheetOverlay && priceForm && submitPriceForm && submitText;
 
 function showSlide(index) {
@@ -49,6 +55,43 @@ function startSlider() {
     }, slideDuration);
 }
 
+function showMobileSlide(index) {
+    if (!hasMobileSlider) {
+        return;
+    }
+
+    activeMobileSlide = (index + mobileSlides.length) % mobileSlides.length;
+
+    mobileSlides.forEach((slide, slideIndex) => {
+        slide.classList.toggle('active', slideIndex === activeMobileSlide);
+    });
+
+    mobileDots.forEach((dot) => {
+        dot.classList.remove('active');
+    });
+
+    if (mobileDots[activeMobileSlide]) {
+        mobileDots[activeMobileSlide].offsetHeight;
+        mobileDots[activeMobileSlide].classList.add('active');
+    }
+}
+
+function startMobileSlider() {
+    if (!hasMobileSlider) {
+        return;
+    }
+
+    clearInterval(mobileSliderTimer);
+    mobileSliderTimer = setInterval(() => {
+        showMobileSlide(activeMobileSlide + 1);
+    }, slideDuration);
+}
+
+function resetMobileSlider() {
+    clearInterval(mobileSliderTimer);
+    startMobileSlider();
+}
+
 function resetSlider() {
     clearInterval(sliderTimer);
     startSlider();
@@ -58,6 +101,13 @@ dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         showSlide(index);
         resetSlider();
+    });
+});
+
+mobileDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        showMobileSlide(index);
+        resetMobileSlider();
     });
 });
 
@@ -152,6 +202,9 @@ function resetFormState() {
 
 if (hasForm) {
     openPriceForm.addEventListener('click', openSheet);
+    if (mobileOpenPriceForm) {
+        mobileOpenPriceForm.addEventListener('click', openSheet);
+    }
     closePriceForm.addEventListener('click', closeSheet);
     sheetOverlay.addEventListener('click', closeSheet);
 }
@@ -190,3 +243,4 @@ if (hasForm) {
 }
 
 startSlider();
+startMobileSlider();
