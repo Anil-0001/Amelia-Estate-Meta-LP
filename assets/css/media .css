@@ -2,6 +2,61 @@
     display: none;
 }
 
+@media (max-width: 991px) {
+    .visit-gallery-section {
+        padding: 44px 18px;
+    }
+
+    .visit-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .visit-card,
+    .visit-card-large,
+    .visit-card-wide {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 260px;
+    }
+
+    .visit-card-large {
+        min-height: 330px;
+    }
+
+    .difference-section {
+        padding: 46px 18px;
+    }
+
+    .difference-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .difference-card,
+    .difference-card-large {
+        grid-row: auto;
+        min-height: 285px;
+    }
+
+    .lifestyle-section {
+        padding: 46px 18px;
+    }
+
+    .lifestyle-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .lifestyle-card,
+    .lifestyle-card-large,
+    .lifestyle-card-wide {
+        grid-column: auto;
+        grid-row: auto;
+        min-height: 285px;
+    }
+}
+
 @media (max-width: 767px) {
     body {
         background: #000;
@@ -12,12 +67,17 @@
     }
 
     main {
+        height: auto;
         min-height: 100svh;
+        overflow: visible;
         background: #000;
     }
 
     .mobile-hero-section {
         display: grid !important;
+        height: 100vh;
+        height: 100svh;
+        height: 100dvh;
         min-height: 100svh;
         place-items: center;
         padding: 0;
@@ -27,7 +87,9 @@
     .mobile-card {
         position: relative;
         width: 100%;
+        height: 100vh;
         height: 100svh;
+        height: 100dvh;
         min-height: 100svh;
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, .08);
@@ -113,7 +175,7 @@
         position: absolute;
         left: 16px;
         right: 16px;
-        bottom: 108px;
+        bottom: 128px;
         z-index: 2;
         border: 1px solid rgba(255, 255, 255, .12);
         border-radius: 24px;
@@ -195,6 +257,8 @@
     }
 
     .mobile-actions button {
+        position: relative;
+        overflow: hidden;
         width: 100%;
         min-height: 52px;
         border: 0;
@@ -208,6 +272,16 @@
         box-shadow: 0 18px 42px rgba(226, 186, 48, .32);
     }
 
+    .mobile-actions button::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 -42%;
+        width: 38%;
+        background: rgba(255, 255, 255, .55);
+        transform: skewX(-22deg);
+        animation: mobileButtonShine 2.4s ease-in-out infinite;
+    }
+
     .mobile-actions a {
         color: rgba(255, 255, 255, .68);
         font-size: 14px;
@@ -216,9 +290,22 @@
     }
 
     #priceSheet {
-        border-radius: 26px 26px 0 0;
+        left: 50%;
+        right: auto;
+        bottom: auto;
+        top: 50%;
+        width: calc(100% - 28px);
+        max-width: 430px;
+        max-height: calc(100dvh - 28px);
+        overflow: hidden;
+        border-radius: 24px;
         padding-left: 18px;
         padding-right: 18px;
+        transform: translate(-50%, -44%) scale(.96);
+    }
+
+    #priceSheet.open {
+        transform: translate(-50%, -50%) scale(1);
     }
 
     #priceSheet h2 {
@@ -257,6 +344,363 @@
     #priceForm {
         display: none !important;
     }
+
+    .visit-gallery-section {
+        padding: 38px 14px 46px;
+    }
+
+    .visit-heading {
+        margin-bottom: 24px;
+    }
+
+    .visit-heading p {
+        font-size: 10px;
+        gap: 8px;
+    }
+
+    .visit-heading p::before,
+    .visit-heading p::after {
+        width: 28px;
+    }
+
+    .visit-heading h2 {
+        font-size: clamp(26px, 9vw, 34px);
+        line-height: 1.08;
+    }
+
+    .visit-heading span {
+        margin-top: 14px;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .visit-card,
+    .visit-card-large {
+        min-height: 235px;
+        border-radius: 16px;
+    }
+
+    .visit-card:active img {
+        transform: scale(1.06);
+    }
+
+    .visit-card-content {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .visit-card-content h3,
+    .visit-card:not(.visit-card-large) .visit-card-content h3 {
+        font-size: clamp(21px, 7vw, 25px);
+    }
+
+    .visit-card-content p {
+        font-size: 12px;
+    }
+
+    .visit-badge {
+        right: 14px;
+        top: 14px;
+        font-size: 9px;
+        padding: 9px 12px;
+    }
+
+    .experience-button {
+        width: 100%;
+        min-width: 0;
+        margin-top: 26px;
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+
+    .experience-popup {
+        bottom: 12px;
+        left: 12px;
+        top: auto;
+        width: calc(100% - 24px);
+        max-height: calc(100dvh - 24px);
+        overflow: hidden;
+        border-radius: 24px;
+        padding: 24px 14px 20px;
+        transform: translateY(100%);
+    }
+
+    .experience-close {
+        right: 12px;
+        top: 10px;
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+    }
+
+    .experience-icon {
+        width: 42px;
+        height: 42px;
+        margin-bottom: 12px;
+        font-size: 21px;
+    }
+
+    .experience-popup h2 {
+        font-size: 24px;
+    }
+
+    .experience-popup > p {
+        margin: 6px 0 16px;
+        font-size: 13px;
+    }
+
+    .experience-options {
+        gap: 9px;
+    }
+
+    .experience-options a {
+        grid-template-columns: 36px 1fr 16px;
+        gap: 10px;
+        padding: 11px 12px;
+    }
+
+    .experience-options span {
+        width: 36px;
+        height: 36px;
+    }
+
+    .experience-options b {
+        font-size: 13px;
+    }
+
+    .experience-options small {
+        font-size: 11px;
+    }
+
+    .experience-popup footer {
+        margin-top: 16px;
+        font-size: 9px;
+        line-height: 1.4;
+    }
+
+    .experience-popup.open {
+        transform: translateY(0);
+    }
+
+    .difference-section {
+        padding: 42px 14px 48px;
+    }
+
+    .difference-heading {
+        margin-bottom: 26px;
+    }
+
+    .difference-heading h2 {
+        font-size: clamp(28px, 9vw, 38px);
+    }
+
+    .difference-heading p {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .difference-heading small {
+        display: inline-block;
+        margin-top: 14px;
+        border: 1px solid rgba(217, 183, 90, .28);
+        border-radius: 999px;
+        background: rgba(217, 183, 90, .08);
+        color: #e7c86f;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .04em;
+        padding: 8px 13px;
+    }
+
+    .difference-grid {
+        gap: 14px;
+    }
+
+    .difference-card,
+    .difference-card-large {
+        min-height: 250px;
+        border-radius: 18px;
+    }
+
+    .difference-content {
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        filter: blur(6px);
+    }
+
+    .difference-content h3,
+    .difference-card:not(.difference-card-large) .difference-content h3 {
+        font-size: clamp(23px, 7vw, 28px);
+    }
+
+    .difference-content p {
+        margin-top: 9px;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .difference-content div {
+        gap: 7px;
+        margin-top: 14px;
+    }
+
+    .difference-content span {
+        font-size: 10px;
+        padding: 7px 10px;
+    }
+
+    .availability-button {
+        width: 100%;
+        margin-top: 24px;
+        padding: 14px 24px;
+        font-size: 14px;
+    }
+
+    .lifestyle-section {
+        padding: 42px 14px 48px;
+    }
+
+    .lifestyle-heading {
+        margin-bottom: 24px;
+    }
+
+    .lifestyle-heading p {
+        font-size: 10px;
+        gap: 8px;
+    }
+
+    .lifestyle-heading p::before,
+    .lifestyle-heading p::after {
+        width: 28px;
+    }
+
+    .lifestyle-heading h2 {
+        font-size: clamp(29px, 9vw, 38px);
+    }
+
+    .lifestyle-heading span {
+        margin-top: 12px;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .lifestyle-grid {
+        position: relative;
+        display: block;
+        min-height: 360px;
+        overflow: hidden;
+        border-radius: 20px;
+    }
+
+    .lifestyle-card,
+    .lifestyle-card-large,
+    .lifestyle-card-wide {
+        position: absolute;
+        inset: 0;
+        min-height: 360px;
+        border-radius: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(18px) scale(.98);
+        transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .lifestyle-card.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(0) scale(1);
+    }
+
+    .lifestyle-card:nth-child(4),
+    .lifestyle-dot:nth-child(4) {
+        display: none;
+    }
+
+    .lifestyle-card img {
+        transform: scale(1.04);
+    }
+
+    .lifestyle-card.active img {
+        animation: lifestyleMobileZoom 4200ms ease both;
+    }
+
+    .lifestyle-copy,
+    .lifestyle-copy-center {
+        left: 18px;
+        right: 18px;
+        bottom: 20px;
+        width: auto;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        text-align: left;
+        transform: none;
+        backdrop-filter: none;
+    }
+
+    .lifestyle-copy h3,
+    .lifestyle-card:not(.lifestyle-card-large) .lifestyle-copy h3 {
+        font-size: clamp(24px, 7.4vw, 30px);
+    }
+
+    .lifestyle-copy p {
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .lifestyle-badge {
+        right: 14px;
+        top: 14px;
+        font-size: 9px;
+        padding: 8px 12px;
+    }
+
+    .lifestyle-dots {
+        display: flex;
+        justify-content: center;
+        gap: 7px;
+        margin-top: 18px;
+    }
+
+    .lifestyle-dot {
+        position: relative;
+        width: 8px;
+        height: 4px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .25);
+    }
+
+    .lifestyle-dot.active {
+        width: 34px;
+    }
+
+    .lifestyle-dot::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        width: 0;
+        border-radius: inherit;
+        background: #d9b75a;
+    }
+
+    .lifestyle-dot.active::after {
+        animation: lifestyleDotProgress 3600ms linear both;
+    }
+
+    .lifestyle-action {
+        margin-top: 24px;
+    }
+
+    .lifestyle-action button {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 380px) {
@@ -268,7 +712,7 @@
     .mobile-info-card {
         left: 14px;
         right: 14px;
-        bottom: 104px;
+        bottom: 122px;
         padding: 16px 14px;
     }
 
@@ -285,6 +729,48 @@
         min-height: 30px;
         padding: 8px 12px;
     }
+
+    .visit-gallery-section {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .visit-card,
+    .visit-card-large {
+        min-height: 220px;
+    }
+
+    .visit-heading h2 {
+        font-size: 27px;
+    }
+
+    .difference-card,
+    .difference-card-large {
+        min-height: 230px;
+    }
+
+    .difference-content {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+    }
+
+    .difference-content h3,
+    .difference-card:not(.difference-card-large) .difference-content h3 {
+        font-size: 22px;
+    }
+
+    .lifestyle-grid,
+    .lifestyle-card,
+    .lifestyle-card-large,
+    .lifestyle-card-wide {
+        min-height: 330px;
+    }
+
+    .lifestyle-copy h3,
+    .lifestyle-card:not(.lifestyle-card-large) .lifestyle-copy h3 {
+        font-size: 23px;
+    }
 }
 
 @keyframes mobileDotProgress {
@@ -294,5 +780,36 @@
 
     to {
         width: 100%;
+    }
+}
+
+@keyframes mobileButtonShine {
+    0% {
+        left: -42%;
+    }
+
+    46%,
+    100% {
+        left: 118%;
+    }
+}
+
+@keyframes lifestyleDotProgress {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes lifestyleMobileZoom {
+    from {
+        transform: scale(1.04);
+    }
+
+    to {
+        transform: scale(1.1);
     }
 }

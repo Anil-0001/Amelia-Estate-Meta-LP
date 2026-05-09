@@ -10,18 +10,31 @@ const submitText = submitPriceForm ? submitPriceForm.querySelector('.submit-text
 const mobileSlides = document.querySelectorAll('.mobile-slide');
 const mobileDots = document.querySelectorAll('.mobile-dot');
 const mobileOpenPriceForm = document.getElementById('mobileOpenPriceForm');
+const openExperiencePopup = document.getElementById('openExperiencePopup');
+const closeExperiencePopup = document.getElementById('closeExperiencePopup');
+const experiencePopup = document.getElementById('experiencePopup');
+const experienceOverlay = document.getElementById('experienceOverlay');
+const differenceCards = document.querySelectorAll('.difference-card');
+const lifestyleCards = document.querySelectorAll('.lifestyle-card');
+const lifestyleDots = document.querySelectorAll('.lifestyle-dot');
+const openLifestylePopup = document.getElementById('openLifestylePopup');
+const revealSections = document.querySelectorAll('main > section:not(.hero-section):not(.mobile-hero-section)');
 
 let activeSlide = 0;
 let activeMobileSlide = 0;
+let activeLifestyleSlide = 0;
 let sliderTimer;
 let mobileSliderTimer;
+let lifestyleSliderTimer;
 let closeTimer;
 let successTimer;
 const slideDuration = 3200;
 
 const hasSlider = slides.length > 0 && dots.length > 0;
 const hasMobileSlider = mobileSlides.length > 0 && mobileDots.length > 0;
+const hasLifestyleSlider = lifestyleCards.length > 0 && lifestyleDots.length > 0;
 const hasForm = openPriceForm && closePriceForm && priceSheet && sheetOverlay && priceForm && submitPriceForm && submitText;
+const hasExperiencePopup = openExperiencePopup && closeExperiencePopup && experiencePopup && experienceOverlay;
 
 function showSlide(index) {
     if (!hasSlider) {
@@ -92,6 +105,82 @@ function resetMobileSlider() {
     startMobileSlider();
 }
 
+function showLifestyleSlide(index) {
+    if (!hasLifestyleSlider) {
+        return;
+    }
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    const slideCount = isMobile ? Math.min(3, lifestyleCards.length) : lifestyleCards.length;
+
+    activeLifestyleSlide = (index + slideCount) % slideCount;
+
+    lifestyleCards.forEach((card, cardIndex) => {
+        card.classList.toggle('active', cardIndex === activeLifestyleSlide);
+    });
+
+    lifestyleDots.forEach((dot) => {
+        dot.classList.remove('active');
+    });
+
+    if (lifestyleDots[activeLifestyleSlide]) {
+        lifestyleDots[activeLifestyleSlide].offsetHeight;
+        lifestyleDots[activeLifestyleSlide].classList.add('active');
+    }
+}
+
+function startLifestyleSlider() {
+    if (!hasLifestyleSlider) {
+        return;
+    }
+
+    clearInterval(lifestyleSliderTimer);
+    lifestyleSliderTimer = setInterval(() => {
+        showLifestyleSlide(activeLifestyleSlide + 1);
+    }, 3600);
+}
+
+function resetLifestyleSlider() {
+    clearInterval(lifestyleSliderTimer);
+    startLifestyleSlider();
+}
+
+function setupSectionReveal() {
+    if (!revealSections.length) {
+        return;
+    }
+
+    revealSections.forEach((section, index) => {
+        section.classList.add('section-reveal');
+        section.classList.add(index % 2 === 0 ? 'reveal-from-left' : 'reveal-from-right');
+        section.style.transitionDelay = `${Math.min(index * 90, 260)}ms`;
+    });
+
+    if (!('IntersectionObserver' in window)) {
+        revealSections.forEach((section) => {
+            section.classList.add('is-visible');
+        });
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+            } else {
+                entry.target.classList.remove('is-visible');
+            }
+        });
+    }, {
+        threshold: 0.14,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    revealSections.forEach((section) => {
+        revealObserver.observe(section);
+    });
+}
+
 function resetSlider() {
     clearInterval(sliderTimer);
     startSlider();
@@ -108,6 +197,13 @@ mobileDots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
         showMobileSlide(index);
         resetMobileSlider();
+    });
+});
+
+lifestyleDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        showLifestyleSlide(index);
+        resetLifestyleSlider();
     });
 });
 
@@ -136,6 +232,33 @@ function closeSheet() {
     closeTimer = setTimeout(() => {
         sheetOverlay.classList.add('hidden');
         resetFormState();
+    }, 300);
+}
+
+function openExperience() {
+    if (!hasExperiencePopup) {
+        return;
+    }
+
+    experienceOverlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        experienceOverlay.classList.add('open');
+        experiencePopup.classList.add('open');
+        experiencePopup.setAttribute('aria-hidden', 'false');
+    });
+}
+
+function closeExperience() {
+    if (!hasExperiencePopup) {
+        return;
+    }
+
+    experienceOverlay.classList.remove('open');
+    experiencePopup.classList.remove('open');
+    experiencePopup.setAttribute('aria-hidden', 'true');
+
+    setTimeout(() => {
+        experienceOverlay.classList.add('hidden');
     }, 300);
 }
 
@@ -205,13 +328,48 @@ if (hasForm) {
     if (mobileOpenPriceForm) {
         mobileOpenPriceForm.addEventListener('click', openSheet);
     }
+    if (openLifestylePopup) {
+        openLifestylePopup.addEventListener('click', openSheet);
+    }
+    lifestyleCards.forEach((card) => {
+        card.addEventListener('click', openSheet);
+    });
     closePriceForm.addEventListener('click', closeSheet);
     sheetOverlay.addEventListener('click', closeSheet);
+}
+
+differenceCards.forEach((card) => {
+    card.addEventListener('click', (event) => {
+        event.stopPropagation();
+
+        differenceCards.forEach((item) => {
+            if (item !== card) {
+                item.classList.remove('is-active');
+            }
+        });
+
+        card.classList.toggle('is-active');
+    });
+});
+
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('.difference-card')) {
+        differenceCards.forEach((card) => {
+            card.classList.remove('is-active');
+        });
+    }
+});
+
+if (hasExperiencePopup) {
+    openExperiencePopup.addEventListener('click', openExperience);
+    closeExperiencePopup.addEventListener('click', closeExperience);
+    experienceOverlay.addEventListener('click', closeExperience);
 }
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         closeSheet();
+        closeExperience();
     }
 });
 
@@ -244,3 +402,5 @@ if (hasForm) {
 
 startSlider();
 startMobileSlider();
+startLifestyleSlider();
+setupSectionReveal();
