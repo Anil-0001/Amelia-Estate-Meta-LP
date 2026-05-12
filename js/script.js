@@ -36,7 +36,7 @@ const lifestyleDots = document.querySelectorAll('.lifestyle-dot');
 const lifestyleSwipeButton = document.querySelector('.lifestyle-swipe-button');
 const openLifestylePopup = document.getElementById('openLifestylePopup');
 const revealSections = document.querySelectorAll('main > section:not(.hero-section):not(.mobile-hero-section)');
-const revealItems = document.querySelectorAll('.visit-card, .difference-card, .lifestyle-card, .signature-feature, .signature-card, .construction-summary article, .bank-grid article, .download-preview-card, .download-options-panel, .download-option, .final-lead-form, .corridor-card, .private-price-card, .pricing-access-grid article');
+const revealItems = document.querySelectorAll('.visit-card, .difference-card, .signature-feature, .signature-card, .construction-summary article, .bank-grid article, .download-preview-card, .download-options-panel, .download-option, .final-lead-form, .corridor-card, .private-price-card, .pricing-access-grid article');
 const signatureSurface = document.querySelector('.signature-interiors-inner');
 const constructionSection = document.querySelector('.construction-progress-section');
 const constructionCounters = document.querySelectorAll('.construction-count');
@@ -252,8 +252,7 @@ function setupSectionReveal() {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-            } else {
-                entry.target.classList.remove('is-visible');
+                revealObserver.unobserve(entry.target);
             }
         });
     }, {
@@ -267,7 +266,10 @@ function setupSectionReveal() {
 
     const itemObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-            entry.target.classList.toggle('is-visible', entry.isIntersecting);
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                itemObserver.unobserve(entry.target);
+            }
         });
     }, {
         threshold: 0.12,
@@ -887,3 +889,22 @@ setupMobileDifferenceReveal();
 
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPLRKu1eUf_50ugR1jRSuyd3pI8DP3fGV70pJXyRIWm0f5tz9dDSokvb6o21HFb1O5/exec";
+
+
+/* MOBILE FULL MENU */
+
+const openMobileMenu = document.getElementById("openMobileMenu");
+const closeMobileMenu = document.getElementById("closeMobileMenu");
+const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+
+if (openMobileMenu && closeMobileMenu && mobileMenuOverlay) {
+    openMobileMenu.addEventListener("click", () => {
+        mobileMenuOverlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+    });
+
+    closeMobileMenu.addEventListener("click", () => {
+        mobileMenuOverlay.classList.add("hidden");
+        document.body.style.overflow = "auto";
+    });
+}

@@ -1812,6 +1812,10 @@
 }
 
 @media (max-width: 767px) {
+    section {
+        content-visibility: visible;
+    }
+
     .section-reveal,
     .section-reveal.reveal-from-left,
     .section-reveal.reveal-from-right {
@@ -1832,5 +1836,19 @@
     .reveal-item.is-visible {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    .lifestyle-card,
+    .lifestyle-card-large,
+    .lifestyle-card-wide {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(18px) scale(.98);
+    }
+
+    .lifestyle-card.active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
     }
 }
