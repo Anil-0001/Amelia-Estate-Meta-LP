@@ -647,7 +647,7 @@
         border-radius: 20px;
         opacity: 0;
         pointer-events: none;
-        transform: translateX(18px) scale(.98);
+        transform: translateX(100%);
         transition: opacity .55s ease, transform .55s ease;
     }
 
@@ -655,6 +655,14 @@
         opacity: 1;
         pointer-events: auto;
         transform: translateX(0) scale(1);
+    }
+
+    .lifestyle-card.is-before {
+        transform: translateX(-100%);
+    }
+
+    .lifestyle-card.is-after {
+        transform: translateX(100%);
     }
 
     .lifestyle-card:nth-child(4),
@@ -1013,6 +1021,30 @@
 
     .loan-approved-heading p {
         font-size: 12px;
+    }
+
+    .construction-heading {
+        padding: 26px 16px 20px;
+    }
+
+    .construction-heading p {
+        font-size: 10px;
+        gap: 8px;
+    }
+
+    .construction-heading p::before,
+    .construction-heading p::after {
+        width: 26px;
+    }
+
+    .construction-heading h2 {
+        font-size: clamp(28px, 8.6vw, 36px);
+    }
+
+    .construction-heading span {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.45;
     }
 
     .bank-grid {
@@ -1819,13 +1851,14 @@
     .section-reveal,
     .section-reveal.reveal-from-left,
     .section-reveal.reveal-from-right {
-        opacity: 0;
-        transform: translateY(42px);
+        opacity: 1;
+        transform: none;
+        transition: none;
     }
 
     .section-reveal.is-visible {
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
     }
 
     .reveal-item {
@@ -1843,12 +1876,20 @@
     .lifestyle-card-wide {
         opacity: 0;
         pointer-events: none;
-        transform: translateY(18px) scale(.98);
+        transform: translateX(100%);
     }
 
     .lifestyle-card.active {
         opacity: 1;
         pointer-events: auto;
-        transform: translateY(0) scale(1);
+        transform: translateX(0) scale(1);
+    }
+
+    .lifestyle-card.is-before {
+        transform: translateX(-100%);
+    }
+
+    .lifestyle-card.is-after {
+        transform: translateX(100%);
     }
 }

@@ -1444,6 +1444,53 @@ section{
     box-shadow: 0 35px 90px rgba(0, 0, 0, .48);
 }
 
+.construction-heading {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 34px 24px 26px;
+    text-align: center;
+}
+
+.construction-heading p {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 14px;
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.construction-heading p::before,
+.construction-heading p::after {
+    content: "";
+    width: 34px;
+    height: 1px;
+    background: rgba(212, 175, 55, .56);
+}
+
+.construction-heading h2 {
+    margin: 0;
+    color: var(--gold-2);
+    font-family: Cinzel, serif;
+    font-size: clamp(32px, 4.6vw, 52px);
+    font-weight: 700;
+    line-height: 1.05;
+    text-shadow: 0 0 18px rgba(212, 175, 55, .28), 0 2px 16px rgba(0, 0, 0, .58);
+}
+
+.construction-heading span {
+    display: block;
+    max-width: 600px;
+    margin: 14px auto 0;
+    color: rgba(255, 255, 255, .68);
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.6;
+}
+
 .construction-marquee {
     overflow: hidden;
     background: linear-gradient(180deg, var(--gold), var(--gold));
@@ -3490,7 +3537,8 @@ section{
 .signature-copy h2,
 .loan-approved-heading h3,
 .project-download-heading h2,
-.final-lead-heading h2 {
+.final-lead-heading h2,
+.construction-heading h2 {
     color: var(--gold-2);
     text-shadow: 0 0 18px rgba(212, 175, 55, .28), 0 2px 16px rgba(0, 0, 0, .58);
 }

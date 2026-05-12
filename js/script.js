@@ -149,10 +149,14 @@ function showLifestyleSlide(index) {
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
     const slideCount = isMobile ? Math.min(3, lifestyleCards.length) : lifestyleCards.length;
 
-    activeLifestyleSlide = (index + slideCount) % slideCount;
+    activeLifestyleSlide = isMobile
+        ? Math.max(0, Math.min(index, slideCount - 1))
+        : (index + slideCount) % slideCount;
 
     lifestyleCards.forEach((card, cardIndex) => {
         card.classList.toggle('active', cardIndex === activeLifestyleSlide);
+        card.classList.toggle('is-before', isMobile && cardIndex < activeLifestyleSlide);
+        card.classList.toggle('is-after', isMobile && cardIndex > activeLifestyleSlide);
     });
 
     lifestyleDots.forEach((dot) => {
@@ -191,8 +195,15 @@ function handleLifestyleSwipe(direction) {
         return;
     }
 
+    const slideCount = Math.min(3, lifestyleCards.length);
+    const nextSlide = Math.max(0, Math.min(activeLifestyleSlide + direction, slideCount - 1));
+
+    if (nextSlide === activeLifestyleSlide) {
+        return;
+    }
+
     lifestyleSwipeMoved = true;
-    showLifestyleSlide(activeLifestyleSlide + direction);
+    showLifestyleSlide(nextSlide);
 
     window.setTimeout(() => {
         lifestyleSwipeMoved = false;
@@ -384,12 +395,6 @@ function setupDownloadPreview() {
 
 function setupMobileDifferenceReveal() {
     if (!differenceCards.length || !('IntersectionObserver' in window)) {
-        return;
-    }
-
-    const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
-    if (!isMobile) {
         return;
     }
 
