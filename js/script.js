@@ -33,8 +33,10 @@ const experienceOverlay = document.getElementById('experienceOverlay');
 const differenceCards = document.querySelectorAll('.difference-card');
 const lifestyleCards = document.querySelectorAll('.lifestyle-card');
 const lifestyleDots = document.querySelectorAll('.lifestyle-dot');
+const lifestyleSwipeButton = document.querySelector('.lifestyle-swipe-button');
 const openLifestylePopup = document.getElementById('openLifestylePopup');
 const revealSections = document.querySelectorAll('main > section:not(.hero-section):not(.mobile-hero-section)');
+const revealItems = document.querySelectorAll('.visit-card, .difference-card, .lifestyle-card, .signature-feature, .signature-card, .construction-summary article, .bank-grid article, .download-preview-card, .download-options-panel, .download-option, .final-lead-form, .corridor-card, .private-price-card, .pricing-access-grid article');
 const signatureSurface = document.querySelector('.signature-interiors-inner');
 const constructionSection = document.querySelector('.construction-progress-section');
 const constructionCounters = document.querySelectorAll('.construction-count');
@@ -53,6 +55,8 @@ let corridorSliderTimer;
 let closeTimer;
 let successTimer;
 let finalLeadSuccessTimer;
+let lifestyleTouchStartX = 0;
+let lifestyleSwipeMoved = false;
 let privatePricingSuccessTimer;
 let constructionAnimated = false;
 const slideDuration = 3200;
@@ -166,6 +170,11 @@ function startLifestyleSlider() {
         return;
     }
 
+    if (window.matchMedia('(max-width: 767px)').matches) {
+        clearInterval(lifestyleSliderTimer);
+        return;
+    }
+
     clearInterval(lifestyleSliderTimer);
     lifestyleSliderTimer = setInterval(() => {
         showLifestyleSlide(activeLifestyleSlide + 1);
@@ -175,6 +184,19 @@ function startLifestyleSlider() {
 function resetLifestyleSlider() {
     clearInterval(lifestyleSliderTimer);
     startLifestyleSlider();
+}
+
+function handleLifestyleSwipe(direction) {
+    if (!hasLifestyleSlider || !window.matchMedia('(max-width: 767px)').matches) {
+        return;
+    }
+
+    lifestyleSwipeMoved = true;
+    showLifestyleSlide(activeLifestyleSlide + direction);
+
+    window.setTimeout(() => {
+        lifestyleSwipeMoved = false;
+    }, 350);
 }
 
 function showCorridorSlide(index) {
@@ -201,7 +223,7 @@ function startCorridorSlider() {
 }
 
 function setupSectionReveal() {
-    if (!revealSections.length) {
+    if (!revealSections.length && !revealItems.length) {
         return;
     }
 
@@ -211,9 +233,17 @@ function setupSectionReveal() {
         section.style.transitionDelay = `${Math.min(index * 90, 260)}ms`;
     });
 
+    revealItems.forEach((item, index) => {
+        item.classList.add('reveal-item');
+        item.style.transitionDelay = `${Math.min(index % 6 * 70, 280)}ms`;
+    });
+
     if (!('IntersectionObserver' in window)) {
         revealSections.forEach((section) => {
             section.classList.add('is-visible');
+        });
+        revealItems.forEach((item) => {
+            item.classList.add('is-visible');
         });
         return;
     }
@@ -233,6 +263,19 @@ function setupSectionReveal() {
 
     revealSections.forEach((section) => {
         revealObserver.observe(section);
+    });
+
+    const itemObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -6% 0px'
+    });
+
+    revealItems.forEach((item) => {
+        itemObserver.observe(item);
     });
 }
 
@@ -386,6 +429,34 @@ lifestyleDots.forEach((dot, index) => {
         showLifestyleSlide(index);
         resetLifestyleSlider();
     });
+});
+
+if (lifestyleSwipeButton) {
+    lifestyleSwipeButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        handleLifestyleSwipe(1);
+    });
+}
+
+lifestyleCards.forEach((card) => {
+    card.addEventListener('touchstart', (event) => {
+        lifestyleTouchStartX = event.touches[0].clientX;
+    }, { passive: true });
+
+    card.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0].clientX;
+        const deltaX = touchEndX - lifestyleTouchStartX;
+
+        if (Math.abs(deltaX) < 40) {
+            return;
+        }
+
+        handleLifestyleSwipe(deltaX < 0 ? 1 : -1);
+    }, { passive: true });
+});
+
+window.addEventListener('resize', () => {
+    startLifestyleSlider();
 });
 
 function openSheet() {
@@ -625,7 +696,14 @@ if (hasForm) {
         openLifestylePopup.addEventListener('click', openSheet);
     }
     lifestyleCards.forEach((card) => {
-        card.addEventListener('click', openSheet);
+        card.addEventListener('click', (event) => {
+            if (lifestyleSwipeMoved) {
+                event.preventDefault();
+                return;
+            }
+
+            openSheet();
+        });
     });
     closePriceForm.addEventListener('click', closeSheet);
     sheetOverlay.addEventListener('click', closeSheet);

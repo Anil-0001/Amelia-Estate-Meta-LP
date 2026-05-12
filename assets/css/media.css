@@ -277,7 +277,7 @@
         align-items: center;
         justify-content: center;
         min-height: 27px;
-        border: 1px solid rgba(255, 255, 255, .16);
+        border: 1px solid rgba(240, 205, 69, .58);
         border-radius: 999px;
         background: rgba(24, 25, 28, .78);
         color: #fff;
@@ -550,7 +550,7 @@
         border: 1px solid rgba(217, 183, 90, .28);
         border-radius: 999px;
         background: rgba(217, 183, 90, .08);
-        color: #e7c86f;
+        color: var(--gold-2);
         font-size: 11px;
         font-weight: 900;
         letter-spacing: .04em;
@@ -667,7 +667,34 @@
     }
 
     .lifestyle-card.active img {
-        animation: lifestyleMobileZoom 4200ms ease both;
+        animation: none;
+    }
+
+    .lifestyle-card:first-child.active .lifestyle-swipe-button {
+        position: absolute;
+        right: 16px;
+        bottom: 92px;
+        z-index: 4;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 34px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--gold);
+        color: var(--black);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, .32), 0 0 18px rgba(212, 175, 55, .24);
+        cursor: pointer;
+        font: inherit;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: .04em;
+        padding: 8px 11px;
+        text-transform: uppercase;
+    }
+
+    .lifestyle-card:first-child.active .lifestyle-swipe-button:hover {
+        background: var(--gold-dark);
     }
 
     .lifestyle-copy,
@@ -702,10 +729,7 @@
     }
 
     .lifestyle-dots {
-        display: flex;
-        justify-content: center;
-        gap: 7px;
-        margin-top: 18px;
+        display: none;
     }
 
     .lifestyle-dot {
@@ -728,7 +752,7 @@
         inset: 0;
         width: 0;
         border-radius: inherit;
-        background: #d9b75a;
+        background: var(--gold);
     }
 
     .lifestyle-dot.active::after {
@@ -1048,7 +1072,7 @@
     }
 
     .construction-trust-line span {
-        color: #ffd400;
+        color: var(--gold);
         font-size: 15px;
     }
 
@@ -1757,5 +1781,56 @@
 
     .final-lead-heading h2 {
         font-size: 27px;
+    }
+}
+
+.mobile-actions button {
+    border: 0;
+    border-radius: 999px;
+    background: var(--gold);
+    color: var(--black);
+    box-shadow: 0 18px 45px rgba(212, 175, 55, .35);
+}
+
+.mobile-actions button:hover {
+    background: var(--gold-dark);
+    color: var(--black);
+}
+
+.location-popup-actions a {
+    min-height: 58px;
+    gap: 6px;
+    padding: 10px;
+}
+
+.location-popup-actions i {
+    font-size: 17px;
+}
+
+.location-popup-actions span {
+    font-size: 12px;
+}
+
+@media (max-width: 767px) {
+    .section-reveal,
+    .section-reveal.reveal-from-left,
+    .section-reveal.reveal-from-right {
+        opacity: 0;
+        transform: translateY(42px);
+    }
+
+    .section-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-item {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .reveal-item.is-visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
