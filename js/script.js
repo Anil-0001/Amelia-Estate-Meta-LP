@@ -40,13 +40,16 @@ const constructionSection = document.querySelector('.construction-progress-secti
 const constructionCounters = document.querySelectorAll('.construction-count');
 const downloadOptions = document.querySelectorAll('.download-option');
 const downloadPreviewImages = document.querySelectorAll('.download-preview-image');
+const corridorImages = document.querySelectorAll('.corridor-image');
 
 let activeSlide = 0;
 let activeMobileSlide = 0;
 let activeLifestyleSlide = 0;
+let activeCorridorSlide = 0;
 let sliderTimer;
 let mobileSliderTimer;
 let lifestyleSliderTimer;
+let corridorSliderTimer;
 let closeTimer;
 let successTimer;
 let finalLeadSuccessTimer;
@@ -57,6 +60,7 @@ const slideDuration = 3200;
 const hasSlider = slides.length > 0 && dots.length > 0;
 const hasMobileSlider = mobileSlides.length > 0 && mobileDots.length > 0;
 const hasLifestyleSlider = lifestyleCards.length > 0 && lifestyleDots.length > 0;
+const hasCorridorSlider = corridorImages.length > 1;
 const hasForm = openPriceForm && closePriceForm && priceSheet && sheetOverlay && priceForm && submitPriceForm && submitText;
 const hasFinalLeadForm = finalLeadForm && finalLeadSubmit && finalLeadSubmitText;
 const hasPrivatePricingPopup = openPrivatePricing && closePrivatePricing && privatePricingPopup && privatePricingForm && privatePricingSubmit && privatePricingSubmitText && privateAccessOverlay;
@@ -171,6 +175,29 @@ function startLifestyleSlider() {
 function resetLifestyleSlider() {
     clearInterval(lifestyleSliderTimer);
     startLifestyleSlider();
+}
+
+function showCorridorSlide(index) {
+    if (!hasCorridorSlider) {
+        return;
+    }
+
+    activeCorridorSlide = (index + corridorImages.length) % corridorImages.length;
+
+    corridorImages.forEach((image, imageIndex) => {
+        image.classList.toggle('active', imageIndex === activeCorridorSlide);
+    });
+}
+
+function startCorridorSlider() {
+    if (!hasCorridorSlider) {
+        return;
+    }
+
+    clearInterval(corridorSliderTimer);
+    corridorSliderTimer = setInterval(() => {
+        showCorridorSlide(activeCorridorSlide + 1);
+    }, 3400);
 }
 
 function setupSectionReveal() {
@@ -307,6 +334,31 @@ function setupDownloadPreview() {
         option.addEventListener('click', () => {
             setDownloadPreview(index);
         });
+    });
+}
+
+function setupMobileDifferenceReveal() {
+    if (!differenceCards.length || !('IntersectionObserver' in window)) {
+        return;
+    }
+
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+    if (!isMobile) {
+        return;
+    }
+
+    const differenceObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            entry.target.classList.toggle('is-active', entry.isIntersecting);
+        });
+    }, {
+        threshold: 0.48,
+        rootMargin: '-14% 0px -18% 0px'
+    });
+
+    differenceCards.forEach((card) => {
+        differenceObserver.observe(card);
     });
 }
 
@@ -748,7 +800,12 @@ if (hasFinalLeadForm) {
 startSlider();
 startMobileSlider();
 startLifestyleSlider();
+startCorridorSlider();
 setupSectionReveal();
 setupSignatureCursorGlow();
 setupConstructionProgress();
 setupDownloadPreview();
+setupMobileDifferenceReveal();
+
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPLRKu1eUf_50ugR1jRSuyd3pI8DP3fGV70pJXyRIWm0f5tz9dDSokvb6o21HFb1O5/exec";

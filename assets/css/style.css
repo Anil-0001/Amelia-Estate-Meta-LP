@@ -11,6 +11,9 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
+section{
+   content-visibility:auto;
+}
 
 .section-reveal {
     opacity: 0;
@@ -372,10 +375,10 @@ body {
     right: 18px;
     top: 18px;
     z-index: 2;
-    border: 1px solid rgba(255, 255, 255, .45);
+    border: 1px solid rgba(240, 211, 90, .9);
     border-radius: 999px;
     background: rgba(30, 30, 30, .62);
-    color: #fff;
+    color: #f0d35a;
     font-size: 10px;
     font-weight: 900;
     letter-spacing: .16em;
@@ -386,7 +389,6 @@ body {
 }
 
 .visit-card:hover .visit-badge {
-    border-color: rgba(227, 189, 85, .8);
     background: rgba(57, 45, 25, .72);
     transform: translateY(-3px);
 }
@@ -1274,9 +1276,10 @@ body {
     gap: 16px;
     border: 1px solid rgba(240, 205, 69, .24);
     border-radius: 16px;
-    background: rgba(20, 17, 12, .82);
+    background: rgba(20, 17, 12, .34);
     padding: 15px 16px;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .signature-feature-content h3 {
@@ -1439,7 +1442,7 @@ body {
 }
 
 .construction-marquee span::before {
-    content: "✓";
+    content: "\2713";
     font-weight: 900;
 }
 
@@ -1464,7 +1467,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: saturate(.82) brightness(.72);
+    filter: saturate(.95) brightness(.88);
     transform: scale(1.02);
 }
 
@@ -1472,8 +1475,8 @@ body {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 50% 45%, rgba(255, 215, 0, .1), transparent 25%),
-        linear-gradient(180deg, rgba(0, 0, 0, .46), rgba(0, 0, 0, .76));
+        radial-gradient(circle at 50% 45%, rgba(255, 215, 0, .06), transparent 25%),
+        linear-gradient(180deg, rgba(0, 0, 0, .24), rgba(0, 0, 0, .52));
 }
 
 .construction-meter {
@@ -1806,7 +1809,7 @@ body {
 }
 
 .bank-grid span::before {
-    content: "✓";
+    content: "\2713";
     display: grid;
     width: 13px;
     height: 13px;
@@ -1818,6 +1821,7 @@ body {
 
 .construction-actions {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
     padding: 0 32px 20px;
 }
@@ -1837,9 +1841,10 @@ body {
 }
 
 .construction-actions a:first-child {
-    background: #ffd400;
-    color: #060606;
+    background: linear-gradient(180deg, #ffe04d, #d9b100);
+    color: #fff;
     box-shadow: 0 18px 44px rgba(255, 212, 0, .22);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, .32);
 }
 
 .construction-actions a:last-child {
@@ -1866,6 +1871,12 @@ body {
     color: rgba(255, 255, 255, .42);
 }
 
+.construction-trust-line div {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
 .construction-trust-line span {
     color: rgba(255, 255, 255, .42);
     font-family: "Material Symbols Rounded";
@@ -1878,7 +1889,7 @@ body {
     font-weight: 700;
 }
 
-.construction-trust-line p:not(:last-child)::after {
+.construction-trust-line div:not(:last-child)::after {
     content: "";
     display: inline-block;
     width: 4px;
@@ -2153,14 +2164,17 @@ body {
 .download-option a {
     display: inline-flex;
     align-items: center;
+    align-self: center;
     gap: 6px;
+    min-height: 28px;
     border: 1px solid rgba(172, 132, 58, .16);
     border-radius: 20px;
     background: #fbf7ef;
     color: #c59849;
     font-size: 12px;
     font-weight: 500;
-    padding: 0px 14px;
+    line-height: 1;
+    padding: 0 10px;
     text-decoration: none;
     transition: background .3s ease, border-color .3s ease, color .3s ease, transform .3s ease;
 }
@@ -2496,13 +2510,25 @@ body {
     min-height: 520px;
 }
 
-.corridor-card img {
+.corridor-card img,
+.corridor-image {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(.58) saturate(.82);
+    filter: brightness(.82) saturate(.96);
+}
+
+.corridor-image {
+    opacity: 0;
+    transform: scale(1.035);
+    transition: opacity 950ms ease, transform 4200ms ease;
+}
+
+.corridor-image.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .corridor-card::after {
@@ -2510,78 +2536,16 @@ body {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(0, 0, 0, .04), rgba(0, 0, 0, .18) 42%, rgba(0, 0, 0, .9)),
-        radial-gradient(circle at 62% 38%, rgba(214, 178, 99, .18), transparent 34%);
-}
-
-.corridor-route {
-    position: absolute;
-    left: 8%;
-    right: 8%;
-    top: 36%;
-    z-index: 1;
-    height: 4px;
-    border-radius: 999px;
-    background: linear-gradient(90deg, rgba(214, 178, 99, .18), #e5c372, rgba(214, 178, 99, .2));
-    box-shadow: 0 0 18px rgba(229, 195, 114, .54);
-    transform: rotate(-15deg);
-}
-
-.corridor-pin {
-    position: absolute;
-    z-index: 2;
-    width: 16px;
-    height: 16px;
-    border: 2px solid #e5c372;
-    border-radius: 50%;
-    background: rgba(5, 6, 8, .74);
-    box-shadow: 0 0 0 3px rgba(229, 195, 114, .22);
-}
-
-.corridor-pin-one {
-    left: 35%;
-    top: 48%;
-}
-
-.corridor-pin-two {
-    left: 55%;
-    top: 39%;
-}
-
-.corridor-pin-three {
-    right: 18%;
-    top: 31%;
-}
-
-.corridor-label {
-    position: absolute;
-    z-index: 3;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 900;
-    padding: 9px 14px;
-}
-
-.corridor-label-project {
-    right: 6%;
-    top: 38%;
-    background: #d6b263;
-    color: #060606;
-}
-
-.corridor-label-it {
-    right: 25%;
-    top: 49%;
-    background: rgba(255, 255, 255, .18);
-    color: #fff;
-    backdrop-filter: blur(8px);
+        linear-gradient(180deg, rgba(0, 0, 0, .02), rgba(0, 0, 0, .08) 42%, rgba(0, 0, 0, .48)),
+        radial-gradient(circle at 62% 38%, rgba(214, 178, 99, .06), transparent 34%);
+    pointer-events: none;
 }
 
 .corridor-content {
     position: absolute;
     left: 36px;
     right: 28px;
-    bottom: 32px;
+    bottom: 88px;
     z-index: 3;
 }
 
@@ -2630,10 +2594,10 @@ body {
 }
 
 .corridor-tags b {
-    border: 1px solid rgba(255, 255, 255, .22);
+    border: 1px solid rgba(214, 178, 99, .48);
     border-radius: 999px;
-    background: rgba(255, 255, 255, .08);
-    color: rgba(255, 255, 255, .92);
+    background: rgba(214, 178, 99, .08);
+    color: #f0d35a;
     font-size: 12px;
     font-weight: 900;
     padding: 9px 14px;
@@ -2785,15 +2749,27 @@ body {
     transform: translateY(-3px);
 }
 
-.exact-location-button {
-    min-width: 200px;
-    min-height: 44px;
-    margin: 16px auto 0;
-    border: 1px solid rgba(255, 255, 255, .1);
-    background: rgba(15, 18, 24, .92);
+.exact-location-button:hover {
+    background: rgba(10, 12, 16, .16);
     color: #fff;
-    font-size: 14px;
+    transform: translateY(-2px);
+}
+
+.exact-location-button {
+    position: absolute;
+    left: 28px;
+    bottom: 28px;
+    z-index: 4;
+    min-width: 180px;
+    min-height: 42px;
+    margin: 0;
+    border: 1px solid rgba(214, 178, 99, .48);
+    background: rgba(10, 12, 16, .08);
+    color: #fff;
+    font-size: 13px;
     box-shadow: none;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 }
 
 .exact-location-button i {
@@ -3378,6 +3354,17 @@ body {
     color: #070707;
 }
 
+.pricing-access-actions a:nth-child(2) {
+    border-color: rgba(214, 178, 99, .62);
+    color: #f1d487;
+}
+
+.pricing-access-actions a:last-child {
+    border-color: rgba(0, 230, 118, .42);
+    background: rgba(0, 230, 118, .12);
+    color: #44ff9b;
+}
+
 .pricing-access-actions a:hover {
     border-color: rgba(214, 178, 99, .62);
     background: rgba(214, 178, 99, .14);
@@ -3393,7 +3380,7 @@ body {
 
 .pricing-access-actions a:last-child:hover {
     border-color: rgba(0, 230, 118, .5);
-    background: rgba(0, 230, 118, .1);
+    background: rgba(0, 230, 118, .18);
     color: #44ff9b;
     box-shadow: 0 14px 34px rgba(0, 0, 0, .22), 0 0 18px rgba(0, 230, 118, .1);
 }
