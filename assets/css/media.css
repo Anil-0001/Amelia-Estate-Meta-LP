@@ -3,6 +3,45 @@
 }
 
 @media (max-width: 991px) {
+    .site-header {
+        top: 12px;
+        padding: 0 12px;
+    }
+
+    .site-header-inner {
+        display: flex;
+        justify-content: space-between;
+        min-height: 64px;
+        border-radius: 24px;
+        padding: 9px 10px;
+    }
+
+    .site-brand {
+        min-width: 0;
+    }
+
+    .site-brand img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .site-brand b {
+        font-size: 13px;
+    }
+
+    .site-brand small {
+        font-size: 8px;
+    }
+
+    .desktop-nav,
+    .header-call-button {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: inline-flex;
+    }
+
     .visit-gallery-section {
         padding: 44px 18px;
     }

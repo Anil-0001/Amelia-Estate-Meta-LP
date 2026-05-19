@@ -30,6 +30,7 @@ const openExperiencePopup = document.getElementById('openExperiencePopup');
 const closeExperiencePopup = document.getElementById('closeExperiencePopup');
 const experiencePopup = document.getElementById('experiencePopup');
 const experienceOverlay = document.getElementById('experienceOverlay');
+const plansHoverCostSheet = document.getElementById('plansHoverCostSheet');
 const differenceCards = document.querySelectorAll('.difference-card');
 const lifestyleCards = document.querySelectorAll('.lifestyle-card');
 const lifestyleDots = document.querySelectorAll('.lifestyle-dot');
@@ -744,6 +745,11 @@ if (hasExperiencePopup) {
     experienceOverlay.addEventListener('click', closeExperience);
 }
 
+if (plansHoverCostSheet) {
+    plansHoverCostSheet.addEventListener('click', openSheet);
+}
+
+
 if (hasPrivatePricingPopup) {
     openPrivatePricing.addEventListener('click', openPrivatePricingPopup);
     closePrivatePricing.addEventListener('click', closePrivateAccessPopups);
@@ -893,8 +899,6 @@ setupDownloadPreview();
 setupMobileDifferenceReveal();
 
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyPLRKu1eUf_50ugR1jRSuyd3pI8DP3fGV70pJXyRIWm0f5tz9dDSokvb6o21HFb1O5/exec";
-
 
 /* MOBILE FULL MENU */
 
@@ -905,11 +909,19 @@ const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
 if (openMobileMenu && closeMobileMenu && mobileMenuOverlay) {
     openMobileMenu.addEventListener("click", () => {
         mobileMenuOverlay.classList.remove("hidden");
+        mobileMenuOverlay.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
     });
 
-    closeMobileMenu.addEventListener("click", () => {
+    const closeMenu = () => {
         mobileMenuOverlay.classList.add("hidden");
+        mobileMenuOverlay.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "auto";
+    };
+
+    closeMobileMenu.addEventListener("click", closeMenu);
+
+    mobileMenuOverlay.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", closeMenu);
     });
 }
