@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap"
@@ -38,7 +38,8 @@
     <header class="site-header" aria-label="Primary navigation">
         <div class="site-header-inner">
             <a class="site-brand" href="#hero" aria-label="Amelia Estate II home">
-                <img src="/assets/images/logo2.0.png" alt="Amelia Estate II">
+                <img class="brand-icon" src="/assets/images/logo2.0.png" alt="Amelia Estate II">
+                <img class="mobile-brand-logo" src="/assets/images/logo2.png" alt="Amelia Estate II">
                 <span>
                     <b>Amelia Estate II</b>
                     <small>Realty Nivesh</small>
@@ -72,7 +73,7 @@
                                     <li>Master + walk-in</li>
                                     <li>Double-height entry</li>
                                 </ul>
-                                <a href="#residence-plans">View Plan <i class="fa-solid fa-arrow-right"
+                                <a href="#residence-plans"><span>View Plan</span> <i class="fa-solid fa-arrow-right"
                                         aria-hidden="true"></i></a>
                             </article>
 
@@ -88,7 +89,7 @@
                                     <li>Store + utility</li>
                                     <li>North-light kitchen</li>
                                 </ul>
-                                <a href="#signature-interiors">View Plan <i class="fa-solid fa-arrow-right"
+                                <a href="#signature-interiors"><span>View Plan</span> <i class="fa-solid fa-arrow-right"
                                         aria-hidden="true"></i></a>
                             </article>
 
@@ -104,7 +105,7 @@
                                     <li>Stilt + store</li>
                                     <li>3 BHK + store</li>
                                 </ul>
-                                <a href="#lifestyle">View Plan <i class="fa-solid fa-arrow-right"
+                                <a href="#lifestyle"><span>View Plan</span> <i class="fa-solid fa-arrow-right"
                                         aria-hidden="true"></i></a>
                             </article>
                         </div>
@@ -215,23 +216,40 @@
     <div id="mobileMenuOverlay" class="mobile-menu-overlay hidden" aria-hidden="true">
         <div class="mobile-menu-panel">
             <div class="mobile-menu-top">
-                <a class="site-brand" href="#hero" aria-label="Amelia Estate II home">
-                    <img src="/assets/images/logo2.0.png" alt="Amelia Estate II">
-                    <span>
-                        <b>Amelia Estate II</b>
-                        <small>Realty Nivesh</small>
-                    </span>
+                <a class="mobile-menu-brand" href="#hero" aria-label="Amelia Estate II home">
+                    <span>Amelia Estate II</span>
+                    <strong>Private Residences</strong>
                 </a>
                 <button id="closeMobileMenu" class="mobile-menu-close" type="button" aria-label="Close menu">
                     <i class="fa-solid fa-xmark" aria-hidden="true"></i>
                 </button>
             </div>
             <nav class="mobile-nav" aria-label="Mobile navigation">
-                <a href="#residence-plans"><span>Residence Plans</span><i class="fa-solid fa-arrow-right"
+                <a href="#visit-residence"><span>Residence</span><i class="fa-solid fa-arrow-right"
                         aria-hidden="true"></i></a>
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-toggle" type="button" aria-expanded="false">
+                        <span>Plans</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="mobile-subnav">
+                        <a href="#residence-plans">The Belmont</a>
+                        <a href="#residence-plans">The Avenue</a>
+                        <a href="#residence-plans">The Atelier</a>
+                    </div>
+                </div>
                 <a href="#visit-gallery"><span>Gallery</span><i class="fa-solid fa-arrow-right"
                         aria-hidden="true"></i></a>
-                <a href="#location"><span>Location</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                <div class="mobile-nav-group">
+                    <button class="mobile-nav-toggle" type="button" aria-expanded="false">
+                        <span>Location</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="mobile-subnav">
+                        <a href="#location">PR-7 Airport Road</a>
+                        <a href="#location">Chandigarh Airport</a>
+                        <a href="#location">Aerocity</a>
+                        <a href="#location">Elante Mall</a>
+                    </div>
+                </div>
                 <a href="#price"><span>Price</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </nav>
             <a class="final-whatsapp-button mobile-menu-whatsapp"

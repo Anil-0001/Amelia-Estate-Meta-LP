@@ -905,21 +905,92 @@ setupMobileDifferenceReveal();
 const openMobileMenu = document.getElementById("openMobileMenu");
 const closeMobileMenu = document.getElementById("closeMobileMenu");
 const mobileMenuOverlay = document.getElementById("mobileMenuOverlay");
+const mobileNavToggles = document.querySelectorAll(".mobile-nav-toggle");
+const siteHeader = document.querySelector(".site-header");
+
+function setupMobileHeaderReveal() {
+    if (!siteHeader) {
+        return;
+    }
+
+    const revealTarget = document.querySelector("#location") || document.querySelector(".mobile-hero-section");
+    let ticking = false;
+
+    const updateMobileHeader = () => {
+        const isMobile = window.matchMedia("(max-width: 991px)").matches;
+        const revealPoint = revealTarget
+            ? revealTarget.getBoundingClientRect().top + window.scrollY - 80
+            : window.innerHeight * .85;
+
+        siteHeader.classList.toggle("mobile-header-visible", isMobile && window.scrollY >= revealPoint);
+        ticking = false;
+    };
+
+    const requestUpdate = () => {
+        if (ticking) {
+            return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(updateMobileHeader);
+    };
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    updateMobileHeader();
+}
+
+mobileNavToggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+        const group = toggle.closest(".mobile-nav-group");
+        const icon = toggle.querySelector("i");
+
+        if (!group) {
+            return;
+        }
+
+        const isOpen = group.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+
+        if (icon) {
+            icon.classList.toggle("fa-chevron-up", isOpen);
+            icon.classList.toggle("fa-chevron-down", !isOpen);
+        }
+    });
+});
+
+setupMobileHeaderReveal();
 
 if (openMobileMenu && closeMobileMenu && mobileMenuOverlay) {
     openMobileMenu.addEventListener("click", () => {
         mobileMenuOverlay.classList.remove("hidden");
+        mobileMenuOverlay.classList.remove("is-closing");
         mobileMenuOverlay.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
     });
 
     const closeMenu = () => {
-        mobileMenuOverlay.classList.add("hidden");
+        if (mobileMenuOverlay.classList.contains("hidden") || mobileMenuOverlay.classList.contains("is-closing")) {
+            return;
+        }
+
+        mobileMenuOverlay.classList.add("is-closing");
         mobileMenuOverlay.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "auto";
+
+        window.setTimeout(() => {
+            mobileMenuOverlay.classList.add("hidden");
+            mobileMenuOverlay.classList.remove("is-closing");
+            document.body.style.overflow = "auto";
+        }, 300);
     };
 
     closeMobileMenu.addEventListener("click", closeMenu);
+
+    mobileMenuOverlay.addEventListener("click", (event) => {
+        if (event.target === mobileMenuOverlay) {
+            closeMenu();
+        }
+    });
 
     mobileMenuOverlay.querySelectorAll("a").forEach((link) => {
         link.addEventListener("click", closeMenu);
